@@ -1,0 +1,13 @@
+#!/bin/bash
+yum update -y
+yum install httpd php php-mysql -y
+service httpd start
+chkconfig httpd on
+cd /var/www/html
+echo "<html><h1>Servidor WEB no ar.<br/> $(hostname -f)</h1></html>" > index.html
+yum install amazon-efs-utils -y
+aws s3 mb s3://nomeunicodabucket
+aws s3 cp index.html s3://nomeunicodabucket
+
+# Funciona para S.O baseados em Redhat/CentOs. Instala o Apache, configura o serviço para iniciar automaticamente, cria uma bucket e joga o index.html lá dentro.
+#Necessário criar uma Role com permissão Full à Bucket.

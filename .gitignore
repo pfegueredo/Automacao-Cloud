@@ -1,0 +1,7 @@
+AWS/Terraform/.terraform
+.terraform
+.terraform*
+.hcl
+.backup
+.tfstate
+.out

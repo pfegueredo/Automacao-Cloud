@@ -1,0 +1,30 @@
+MYSQL:
+
+docker run --name meubanco -e MYSQL_DATABASE=dbwordpress -e MYSQL_USER=dbuser -e MYSQL_PASSWORD=abcdefgh -e MYSQL_ROOT_PASSWORD=12345678 -p 3306:3306 -v /myapp/db:/var/lib/mysql -d mysql:latest
+
+ 
+
+WORDPRESS:
+
+docker run --name mywordpress -e WORDPRESS_DB_HOST=<IP do Node onde está sendo executado o MYSQL>:3306 -e WORDPRESS_DB_USER=dbuser -e WORDPRESS_DB_PASSWORD=abcdefgh -e WORDPRESS_DB_NAME=dbwordpress -e WORDPRESS_TABLE_PREFIX=wpblog -p 8080:80 -d wordpress:latest
+
+
+
+============ WORDPRESS COM ALTA DISPONIBILIDADE =======================
+
+#Suba o Container MYSQL:
+docker run --name some-mysql -e MYSQL_DATABASE=dbwordpress -e MYSQL_USER=dbuser -e MYSQL_PASSWORD=12345678 -e MYSQL_ROOT_PASSWORD=12345678 -d mysql:latest
+
+
+#Suba o Container Wordpress 1:
+docker run --name mywordpress1 -e WORDPRESS_DB_USER=dbuser -e WORDPRESS_DB_PASSWORD=12345678 -e WORDPRESS_DB_NAME=dbwordpress -e WORDPRESS_TABLE_PREFIX=wpLaboratorio --link some-mysql:mysql -v /root/landingpage:/var/www/html -d wordpress:latest
+
+
+#Suba o Container Wordpress 2:
+
+docker run --name mywordpress2 -e WORDPRESS_DB_USER=dbuser -e WORDPRESS_DB_PASSWORD=12345678 -e WORDPRESS_DB_NAME=dbwordpress -e WORDPRESS_TABLE_PREFIX=wpLaboratorio
+/root/tlandingpage:/var/www/html -d wordpress:latest
+
+Suba o Container LOAD BALANCER HAPROXY:
+docker run -d --name HaproxyLB -p 8080:80 -e BALANCE=source -e MODE=tcp -e OPTION=tcplog --link mywordpress1:mywordpress1 --link mywordpress2:mywordpress2 dockercloud/haproxy
+

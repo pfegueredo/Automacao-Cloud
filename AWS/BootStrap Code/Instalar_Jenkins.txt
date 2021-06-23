@@ -1,0 +1,11 @@
+sudo apt install -y openjdk-8-jre-headless
+cd ~
+mkdir tools
+cd tools
+wget https://get.jenkins.io/war-stable/2.289.1/jenkins.war
+
+#Subir fora de backgroud par pegar a chave: ecc9b45ea1974bf783f8af25368bb79c
+java -jar jenkins.war
+
+#Subir em background:
+java -jar jenkins.war &
