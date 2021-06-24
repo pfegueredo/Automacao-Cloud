@@ -17,7 +17,7 @@ provider "aws" {
 resource "aws_instance" "servidorterraform" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-
+  security_groups = var.security_groups
   tags = var.instance_tags
   
 }
