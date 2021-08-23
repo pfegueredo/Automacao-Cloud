@@ -1,0 +1,9 @@
+#!/bin/bash
+apt update -y
+apt install apache2 php php-mysql unzip -y
+systemctl enable apache2
+mkdir /gophish
+wget https://github.com/gophish/gophish/releases/download/v0.11.0/gophish-v0.11.0-linux-64bit.zip
+unzip gophish*
+cd /var/www/html
+echo "Servidor Funcionando" > funcionando.html
