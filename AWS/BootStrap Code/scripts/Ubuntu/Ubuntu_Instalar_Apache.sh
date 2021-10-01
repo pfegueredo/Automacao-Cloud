@@ -1,6 +1,5 @@
 #!/bin/bash
 apt update -y
-apt install apache2 php -y
-systemctl enable apache2
+apt install apache2 -y
 cd /var/www/html
 echo "Servidor Funcionando" > funcionando.html
